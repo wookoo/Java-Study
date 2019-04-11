@@ -61,7 +61,7 @@ class Truck extends Vehicle{
 }
 
 
-public class FrameTest {
+public class RacingCarFrame {
 
 	public static void main(String[] args) {
 
