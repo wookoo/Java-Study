@@ -1,32 +1,32 @@
 import java.util.Scanner;
 
-public class CalChange { //ÀÚÆÇ±â¸¦ ¸¸µå´Â Å¬·¡½º
+public class CalChange { //ìíŒê¸°ë¥¼ ë§Œë“œëŠ” í´ë˜ìŠ¤
 
 
 	public static void main(String[] args) {
 
-		Scanner scan = new Scanner(System.in); //Scanner Class ¸¦ °¡Á®¿Í¼­ scan °´Ã¼ »ı¼º
-		int InputMoney, Price, change; //ÀÔ·Â¹ŞÀºµ·, °¡°İ, °Å½º¸§µ·À» ¼³Á¤
+		Scanner scan = new Scanner(System.in); //Scanner Class ë¥¼ ê°€ì ¸ì™€ì„œ scan ê°ì²´ ìƒì„±
+		int InputMoney, Price, change; //ì…ë ¥ë°›ì€ëˆ, ê°€ê²©, ê±°ìŠ¤ë¦„ëˆì„ ì„¤ì •
 
 
 		do {
 
-			System.out.print("ÅõÀÔÇÑ µ· : ");
-			InputMoney = scan.nextInt(); //scan °´Ã¼ÀÇ nextInt ¸Ş¼Òµå¸¦ »ç¿ëÇÏ¿© Á¤¼öÇü°ªÀ» ¹Ş¾Æ¿Â´Ù.
+			System.out.print("íˆ¬ì…í•œ ëˆ : ");
+			InputMoney = scan.nextInt(); //scan ê°ì²´ì˜ nextInt ë©”ì†Œë“œë¥¼ ì‚¬ìš©í•˜ì—¬ ì •ìˆ˜í˜•ê°’ì„ ë°›ì•„ì˜¨ë‹¤.
 
-		} while (InputMoney <= 0); //InputMoney °¡ 0º¸´Ù Å¬‹š±îÁö ¹İº¹ÇÏ¿© À½¼ö°¡ µé¾î¿ÀÁö ¸øÇÏ°Ô ÇÑ´Ù.
+		} while (InputMoney <= 0); //InputMoney ê°€ 0ë³´ë‹¤ í´Â‹Âšê¹Œì§€ ë°˜ë³µí•˜ì—¬ ìŒìˆ˜ê°€ ë“¤ì–´ì˜¤ì§€ ëª»í•˜ê²Œ í•œë‹¤.
 
 		do {
 
-			System.out.print("¹°°Ç°ª : ");
-			Price = scan.nextInt();//scan °´Ã¼ÀÇ nextInt ¸Ş¼Òµå¸¦ »ç¿ëÇÏ¿© Á¤¼öÇü °ªÀ» ¹Ş¾Æ¿Â´Ù.
+			System.out.print("ë¬¼ê±´ê°’ : ");
+			Price = scan.nextInt();//scan ê°ì²´ì˜ nextInt ë©”ì†Œë“œë¥¼ ì‚¬ìš©í•˜ì—¬ ì •ìˆ˜í˜• ê°’ì„ ë°›ì•„ì˜¨ë‹¤.
 
-		} while (InputMoney - Price <= 0);  //ÀÔ·ÂÇÑ µ· º¸´Ù ¹°°Ç°ªÀÌ ´õ Å©°Ô ¼³Á¤ÇÏÁö ¸øÇÏµµ·Ï ¹İº¹ÇÑ´Ù.
+		} while (InputMoney - Price <= 0);  //ì…ë ¥í•œ ëˆ ë³´ë‹¤ ë¬¼ê±´ê°’ì´ ë” í¬ê²Œ ì„¤ì •í•˜ì§€ ëª»í•˜ë„ë¡ ë°˜ë³µí•œë‹¤.
 
-		change = InputMoney - Price; //°Å½º¸§µ·Àº ÅõÀÔ±İ¾× - °Å½º¸§µ·ÀÌ´Ù.
-		System.out.println("°Å½º¸§µ· : " + change); //°Å½½·¯Áà¾ßÇÏ´Â °Å½º¸§µ·À» Ãâ·ÂÇÑ´Ù.
-		System.out.println("500 ¿ø Â¥¸® µ¿ÀüÀÇ °¹¼ö : " + change / 500); //500¿ø °¹¼ö´Â °Å½º¸§µ·À» 500¿øÀ¸·Î ³ª´« ¸òÀÌ´Ù
-		change %= 500; //500¿øÀ» °Å½½·¯ÁáÀ¸¹Ç·Î ³²Àº ÀÜ¾×Àº 500¿øÀ¸·Î ³ª´« ³ª¸ÓÁöÀÌ´Ù.
-		System.out.println("100 ¿ø Â¥¸® µ¿ÀüÀÇ °¹¼ö : " + change / 100); //³ª¸ÓÁö¸¦ 100À¸·Î Ãâ·ÂÇØÁØ´Ù.
+		change = InputMoney - Price; //ê±°ìŠ¤ë¦„ëˆì€ íˆ¬ì…ê¸ˆì•¡ - ê±°ìŠ¤ë¦„ëˆì´ë‹¤.
+		System.out.println("ê±°ìŠ¤ë¦„ëˆ : " + change); //ê±°ìŠ¬ëŸ¬ì¤˜ì•¼í•˜ëŠ” ê±°ìŠ¤ë¦„ëˆì„ ì¶œë ¥í•œë‹¤.
+		System.out.println("500 ì› ì§œë¦¬ ë™ì „ì˜ ê°¯ìˆ˜ : " + change / 500); //500ì› ê°¯ìˆ˜ëŠ” ê±°ìŠ¤ë¦„ëˆì„ 500ì›ìœ¼ë¡œ ë‚˜ëˆˆ ëª«ì´ë‹¤
+		change %= 500; //500ì›ì„ ê±°ìŠ¬ëŸ¬ì¤¬ìœ¼ë¯€ë¡œ ë‚¨ì€ ì”ì•¡ì€ 500ì›ìœ¼ë¡œ ë‚˜ëˆˆ ë‚˜ë¨¸ì§€ì´ë‹¤.
+		System.out.println("100 ì› ì§œë¦¬ ë™ì „ì˜ ê°¯ìˆ˜ : " + change / 100); //ë‚˜ë¨¸ì§€ë¥¼ 100ìœ¼ë¡œ ì¶œë ¥í•´ì¤€ë‹¤.
 	}
 }
