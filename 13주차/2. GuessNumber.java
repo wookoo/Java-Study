@@ -111,6 +111,18 @@ public class GuessNumber extends JFrame{
 				// TODO Auto-generated method stub
 				int KeyCode = e.getKeyCode();
 				if (KeyCode ==KeyEvent.VK_ENTER) {
+					String HintText;
+					Color color;
+					switch(Compare()) {
+						case 1:
+							
+						case 2:
+						case 3:
+						
+						default:
+							
+						
+					}
 					if (Compare() == 1) {
 						Hint.setText("정답 입니다!");
 						Hint.setBackground(new Color(0,255,0));
