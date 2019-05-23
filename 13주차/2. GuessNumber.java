@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +33,11 @@ public class GuessNumber extends JFrame{
 		TextPanel.add(Stringlabel);
 		InputTextField = new JTextField(10);
 		TextPanel.add(InputTextField);
+		
+		
+		
+		
+		
 		this.add(TextPanel);
 		//첫번째 숫자를 추측하시오 및 입력 칸 설정하는 부분 끝
 		
@@ -45,6 +52,9 @@ public class GuessNumber extends JFrame{
 		
 		JPanel ButtonPanel = new JPanel();
 		JButton NewGameButton = new JButton("새 게임");
+		
+		
+		
 		NewGameButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -53,6 +63,7 @@ public class GuessNumber extends JFrame{
 				Hint.setBackground(null);
 				Random = (int)(Math.random() *100);
 				System.out.println(Random);
+				InputTextField.setText("");
 			}
 			
 		});
@@ -60,38 +71,72 @@ public class GuessNumber extends JFrame{
 		
 		ButtonPanel.add(NewGameButton);
 		
-		JButton CheckAnswerButton = new JButton("정답 확인");
-		CheckAnswerButton.addActionListener(new ActionListener() {
+		
+		
+		
+		
+		JButton ShutDownButton = new JButton("종료");
+		ShutDownButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Compare() == 1) {
-					Hint.setText("정답 입니다!");
-					Hint.setBackground(new Color(0,255,0));
-				}
-				else if(Compare() == 2) {
-					Hint.setText("너무 높습니다!");
-					Hint.setBackground(Color.red);
-				}
-				else if(Compare() == 3) {
-					Hint.setText("너무 낮습니다!");
-					Hint.setBackground(Color.red);
-				}
-				else {
-					Hint.setText("오류 !숫자를 입력하세요 !");
-					Hint.setBackground(Color.yellow);
-				}
+				System.exit(0);
 				
 			}
 			
 		});
 		
-		ButtonPanel.add(CheckAnswerButton);
+		
+		
+		ButtonPanel.add(ShutDownButton);
 		
 		this.add(ButtonPanel);
 		
+		InputTextField.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+			
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				int KeyCode = e.getKeyCode();
+				if (KeyCode ==KeyEvent.VK_ENTER) {
+					if (Compare() == 1) {
+						Hint.setText("정답 입니다!");
+						Hint.setBackground(new Color(0,255,0));
+					}
+					else if(Compare() == 2) {
+						Hint.setText("너무 높습니다!");
+						Hint.setBackground(Color.red);
+					}
+					else if(Compare() == 3) {
+						Hint.setText("너무 낮습니다!");
+						Hint.setBackground(Color.red);
+					}
+					else {
+						Hint.setText("오류 !숫자를 입력하세요 !");
+						Hint.setBackground(Color.yellow);
+					}
+				}
+				
+				
+			}
+			
+		});
 		
 		
+	
+		InputTextField.setFocusable(true);
 		this.setVisible(true);
 	}
 	
