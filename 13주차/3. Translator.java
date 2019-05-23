@@ -62,6 +62,7 @@ public class Translator extends JFrame{
 				
 				String input = EnglishInput.getText(); //사용자에게 입력 받은걸 가져와서 input 에 저장
 				input = input.trim(); //trim 메소드를 호출하여, 앞 뒤 공백 제거
+				input = input.toLowerCase(); //toLowerCase() 메소드를 호출하여 소문자로 검색하게끔 설정
 				String output = "정보 없음!"; //출력할 정보
 				for (Word w : Data) { //Data 필드의 원소 하나하나를 가져와서 돌린다 - for each 문
 					if ((w.getEng_word()).equals(input)){ //w 에서 가져온 영어가 입력한거랑 같으면
