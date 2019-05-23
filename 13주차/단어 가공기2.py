@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import re
+
 
 for i in range(103,122+1):
     target = '''https://alldic.daum.net/search.do?q=''' +'%c'%i+'''
@@ -11,7 +13,7 @@ for i in range(103,122+1):
     for title in titles:
         
         eng = title.find("a")
-        kors = title.find_all("daum:word")
+        kors = title.find_all("li")
 
         eng = str(eng)
         eng = eng[eng.find(">")+1:]
@@ -21,8 +23,13 @@ for i in range(103,122+1):
 
         for tempkor in kors:
             tempkor = str(tempkor)
-            tempkor = tempkor[tempkor.find(">")+1:]
-            tempkor = tempkor[:tempkor.find("<")]
-            kor += tempkor+"\\n"
-        print("Data.add(new Word(\""+kor+"\",\""+eng+"\"));" )
+            hangul = re.compile('[^ ㄱ-ㅣ가-힣]+') #한글만 추출을 위한 정규식
+            result = hangul.sub("",tempkor)
+            result = str(result)
+            result = result.strip()
+            result = result.replace(" ","")
+            kor += result + "\\n"
 
+
+        print("Data.add(new Word(\""+kor+"\",\""+eng+"\"));" )
+    
