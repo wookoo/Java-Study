@@ -1,4 +1,4 @@
-package master;
+package wookoo;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
