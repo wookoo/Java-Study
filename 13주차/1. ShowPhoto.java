@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 public class ShowPhoto extends JFrame{
 	
 	public ShowPhoto() {
-		super("사진 테스트");
-		this.setSize(700,300);
+		super("사진 테스트"); //윈도우 창 
+		this.setSize(700,300); //가로 700 세로 300 으로 크기 설정
 
 		JPanel p1 = new JPanel();
 		p1.setLayout(new GridLayout(1,3));
