@@ -112,33 +112,28 @@ public class GuessNumber extends JFrame{
 				int KeyCode = e.getKeyCode();
 				if (KeyCode ==KeyEvent.VK_ENTER) {
 					String HintText;
-					Color color;
+					Color color = null;
 					switch(Compare()) {
 						case 1:
-							
+							HintText = "정답 입니다!";
+							color = new Color(0,255,0);
+							break;
 						case 2:
+							HintText = "너무 높습니다!";
+							color = Color.red;
+							break;
 						case 3:
-						
+							HintText = "너무 낮습니다!";
+							color = Color.red;
+							break;
 						default:
-							
-						
+							HintText = "오류! 숫자를 입력학세요 !";
+							color = Color.yellow;
+					
 					}
-					if (Compare() == 1) {
-						Hint.setText("정답 입니다!");
-						Hint.setBackground(new Color(0,255,0));
-					}
-					else if(Compare() == 2) {
-						Hint.setText("너무 높습니다!");
-						Hint.setBackground(Color.red);
-					}
-					else if(Compare() == 3) {
-						Hint.setText("너무 낮습니다!");
-						Hint.setBackground(Color.red);
-					}
-					else {
-						Hint.setText("오류 !숫자를 입력하세요 !");
-						Hint.setBackground(Color.yellow);
-					}
+					Hint.setText(HintText);
+					Hint.setBackground(color);
+					
 				}
 				
 				
@@ -146,8 +141,7 @@ public class GuessNumber extends JFrame{
 			
 		});
 		
-		
-	
+
 		InputTextField.setFocusable(true);
 		this.setVisible(true);
 	}
