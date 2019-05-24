@@ -12,9 +12,11 @@ import javax.swing.JPanel;
 
 public class TicTacToe extends JFrame{
 	
-	ArrayList<JButton> WellButtons;
+	ArrayList<JButton> WellButtons = new ArrayList<JButton>(); //버튼을 담는 ArrayList 생성
 	String turn = "X";
-	int UserLastPostion = 0;
+	
+	ArrayList<Integer> UserLastPostion = new ArrayList<Integer>();
+
 	int ComputerLastPostion = 0; //뒤로가기 버튼을 만들기 위한 버튼 Postion 생성
 	String[][] Board = { //착수 위치를 저장하기 위한 판, 게임 승리 알고리즘 검사할때 활용
 			{"","",""},
@@ -24,7 +26,6 @@ public class TicTacToe extends JFrame{
 	public TicTacToe() {
 		super("틱택토 게임"); //틱텍토 게임이라고 윈도우 창 이름 설정
 		
-		WellButtons = new ArrayList<JButton>(); //버튼을 담는 ArrayList 생성
 		
 		
 		this.setSize(300,350);
@@ -61,7 +62,7 @@ public class TicTacToe extends JFrame{
 					if(Board[BoardX][BoardY] == "" && WinCheck().equals("")) { //착수 위치가 비어있고 게임이 안끝난경우
 						TempButton.setText(turn);
 						
-						UserLastPostion = k;
+						UserLastPostion.add(k);
 						
 						
 						Board[BoardX][BoardY] = turn;
@@ -110,14 +111,26 @@ public class TicTacToe extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println(UserLastPostion);
-				//유저가 마지막 착수한 부분을 출력
 				
-				JButton TempButtons = WellButtons.get(UserLastPostion);
-				TempButtons.setText("");
-				int BoardX = UserLastPostion/3;
-				int BoardY = UserLastPostion%3;
-				Board[BoardX][BoardY] = "";
+				
+				
+				try {
+					int LastPostion = UserLastPostion.get(UserLastPostion.size()-1);
+					UserLastPostion.remove(UserLastPostion.size()-1); //마지막 인덱스 삭제
+					
+					System.out.println(LastPostion);//유저가 마지막 착수한 부분을 출력
+					
+					JButton TempButtons = WellButtons.get(LastPostion); //마지막 착수 위치 버튼을 가져오고
+					TempButtons.setText("");
+					int BoardX = LastPostion/3; //착수 위치를 가지고 X Y 위치를 설정한다
+					int BoardY = LastPostion%3;
+					Board[BoardX][BoardY] = ""; //해당 착수위치의 보드를 "" 로 만든다. > 해당 부분 지우기
+				}
+				catch(Exception error){
+					//error.printStackTrace();
+				}
+				
+				
 			}
 			
 		});
