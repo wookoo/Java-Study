@@ -51,6 +51,7 @@ public class TicTacToe extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					TempButton.setText(turn);
 					turn = turn.equals("X") ? "O" : "X";
+					UserLastPostion = k;
 					
 					
 				}
