@@ -16,6 +16,11 @@ public class TicTacToe extends JFrame{
 	String turn = "X";
 	int UserLastPostion = 0;
 	int ComputerLastPostion = 0; //뒤로가기 버튼을 만들기 위한 버튼 Postion 생성
+	String[][] Board = { //착수 위치를 저장하기 위한 판, 게임 승리 알고리즘 검사할때 활용
+			{"","",""},
+			{"","",""},
+			{"","",""}
+	};
 	public TicTacToe() {
 		super("틱택토 게임"); //틱텍토 게임이라고 윈도우 창 이름 설정
 		
@@ -49,9 +54,30 @@ public class TicTacToe extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					TempButton.setText(turn);
-					turn = turn.equals("X") ? "O" : "X";
-					UserLastPostion = k;
+					
+					int BoardX = k/3;
+					int BoardY = k%3;
+					
+					if(Board[BoardX][BoardY] == "" && WinCheck().equals("")) { //착수 위치가 비어있고 게임이 안끝난경우
+						TempButton.setText(turn);
+						
+						UserLastPostion = k;
+						
+						
+						Board[BoardX][BoardY] = turn;
+						
+						turn = turn.equals("X") ? "O" : "X";
+						
+						for (int a =0; a < 3; a++) {    //게임판 초기화
+							for (int b=0; b<3; b++) {
+								System.out.print(Board[a][b] +",");
+							}
+							System.out.println();
+						}
+						System.out.println("승리자 " +WinCheck());
+					}
+					
+					
 					
 					
 				}
@@ -66,8 +92,26 @@ public class TicTacToe extends JFrame{
 				// TODO Auto-generated method stub
 				for (JButton b: WellButtons) { //for each 문을 사용하여 버튼의 글자 초기화
 					b.setText(" ");
+					
+					for (int i =0; i < 3; i++) {    //게임판 초기화
+						for (int j=0; j<3; j++) {
+							Board[i][j] = "";
+						}
+					}
+					
 				}
 				
+			}
+			
+		});
+		
+		Undo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(UserLastPostion);
+				//유저가 마지막 착수한 부분을 출력
 			}
 			
 		});
@@ -89,6 +133,34 @@ public class TicTacToe extends JFrame{
 		
 		this.setVisible(true); 
 	}
+	
+	private String WinCheck() {
+		
+		
+		 for(int i=0; i<3; i++){ 
+			 if( Board[0][i].equals(Board[1][i]) && Board[1][i].equals(Board[2][i])) {
+				 return Board[0][i];
+			 }
+			 
+		 } 
+		 for(int i=0; i<3; i++){
+			 if( Board[i][0].equals(Board[i][1]) && Board[i][1].equals(Board[i][2])) {
+				 return Board[i][0];
+			 }
+	
+		 } 
+
+			 
+		 if( Board[0][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][2])) {
+			return Board[0][0];
+				
+		}
+		return "";
+		
+		
+	}
+
+	
 	
 	public static void main(String[] args) {
 		new TicTacToe();
