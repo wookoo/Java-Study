@@ -14,7 +14,8 @@ public class TicTacToe extends JFrame{
 	
 	ArrayList<JButton> WellButtons;
 	String turn = "X";
-	
+	int UserLastPostion = 0;
+	int ComputerLastPostion = 0; //뒤로가기 버튼을 만들기 위한 버튼 Postion 생성
 	public TicTacToe() {
 		super("틱택토 게임"); //틱텍토 게임이라고 윈도우 창 이름 설정
 		
@@ -36,17 +37,19 @@ public class TicTacToe extends JFrame{
 		
 		JPanel GamePanel = new JPanel(); //게임을 위한 버튼 9개를 담는 패널
 		GamePanel.setLayout(new GridLayout(3,1));
-		for (int i =0; i < 9; i++) {
+		for (int i =0; i < 9; i++) { //for 문으로 버튼 생성및 추가
 			WellButtons.add(new JButton());
 			GamePanel.add(WellButtons.get(i));
 		}
 		
-		for (JButton b: WellButtons) { //버튼에 대한 동작 설정
-			b.addActionListener(new ActionListener() {
+		for (int i = 0; i < WellButtons.size();i++) { //버튼에 대한 동작 설정
+			final int k = i;
+			JButton TempButton = WellButtons.get(k);
+			TempButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					b.setText(turn);
+					TempButton.setText(turn);
 					turn = turn.equals("X") ? "O" : "X";
 					
 					
