@@ -112,6 +112,12 @@ public class TicTacToe extends JFrame{
 				// TODO Auto-generated method stub
 				System.out.println(UserLastPostion);
 				//유저가 마지막 착수한 부분을 출력
+				
+				JButton TempButtons = WellButtons.get(UserLastPostion);
+				TempButtons.setText("");
+				int BoardX = UserLastPostion/3;
+				int BoardY = UserLastPostion%3;
+				Board[BoardX][BoardY] = "";
 			}
 			
 		});
