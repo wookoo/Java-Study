@@ -68,6 +68,16 @@ public class TicTacToe extends JFrame{
 			
 		});
 		
+		Exit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+			
+		});
+		
 		
 		
 		this.add(functionPanel,BorderLayout.NORTH);
