@@ -17,8 +17,7 @@ import javax.swing.JPanel;
 public class TicTacToeWithComputer extends JFrame{
 	
 	ArrayList<JButton> WellButtons = new ArrayList<JButton>(); //버튼을 담는 ArrayList 생성
-	String turn = "X";
-	
+
 	ArrayList<Integer> UserLastPostion = new ArrayList<Integer>(); //사용자의 마지막 위치를 담는 버튼 생성
 	ArrayList<Integer> ComputerLastPostion = new ArrayList<Integer>(); //컴퓨터의 마지막 위치를 담는 버튼 생성
 	
@@ -80,7 +79,7 @@ public class TicTacToeWithComputer extends JFrame{
 					int BoardY = k%3;
 					
 					if(Board[BoardX][BoardY] == "" && WinCheck().equals("")) { //착수 위치가 비어있고 게임이 안끝난경우
-						//TempButton.setText(turn);
+					
 						TempButton.setBackground(Color.yellow); //마지막 착수 위치 표기
 						TempButton.setIcon(X_ICON);
 						
@@ -161,7 +160,7 @@ public class TicTacToeWithComputer extends JFrame{
 					b.setBackground(null);
 					b.setIcon(null);
 					
-					turn = "X"; //차례도 초기화 해줘야됨
+					
 					for (int i =0; i < 3; i++) {    //게임판 초기화
 						for (int j=0; j<3; j++) {
 							Board[i][j] = "";
