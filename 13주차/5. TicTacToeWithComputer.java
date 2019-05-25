@@ -55,7 +55,7 @@ public class TicTacToeWithComputer extends JFrame{
 		functionPanel.add(Undo);
 		functionPanel.add(Exit);
 		
-		ResultLabel = new JLabel("Player 1 의 차례"); //결과 라벨의 누구의 턴인지 알려준다.
+		ResultLabel = new JLabel("Player의 차례"); //결과 라벨의 누구의 턴인지 알려준다.
 		JPanel ResultPanel = new JPanel();
 		ResultPanel.add(ResultLabel);
 		
@@ -152,7 +152,7 @@ public class TicTacToeWithComputer extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ResultLabel.setText("Player 1 의 차례");
+				ResultLabel.setText("Player의 차례");
 				UserLastPostion.clear(); //마지막 착수 위치 싹 초기화
 				ComputerLastPostion.clear();
 				// TODO Auto-generated method stub
