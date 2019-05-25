@@ -27,7 +27,7 @@ public class TicTacToeWithComputer extends JFrame{
 			{"","",""},
 			{"","",""}
 	};
-	public TicTacToe() {
+	public TicTacToeWithComputer() {
 		super("틱택토 게임"); //틱텍토 게임이라고 윈도우 창 이름 설정
 		
 		
