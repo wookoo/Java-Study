@@ -121,6 +121,7 @@ public class TicTacToe extends JFrame{
 					b.setBackground(null);
 					b.setIcon(null);
 					ResultLabel.setText("Player 1 의 차례");
+					UserLastPostion.clear(); //마지막 착수 위치 싹 초기화
 					turn = "X"; //차례도 초기화 해줘야됨
 					for (int i =0; i < 3; i++) {    //게임판 초기화
 						for (int j=0; j<3; j++) {
