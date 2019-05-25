@@ -18,8 +18,8 @@ public class TicTacToeWithComputer extends JFrame{
 	
 	ArrayList<JButton> WellButtons = new ArrayList<JButton>(); //버튼을 담는 ArrayList 생성
 
-	ArrayList<Integer> UserLastPostion = new ArrayList<Integer>(); //사용자의 마지막 위치를 담는 버튼 생성
-	ArrayList<Integer> ComputerLastPostion = new ArrayList<Integer>(); //컴퓨터의 마지막 위치를 담는 버튼 생성
+	ArrayList<Integer> UserLastPostion = new ArrayList<Integer>(); //사용자의 마지막 위치를 담는 어레이 리스트 생성
+	ArrayList<Integer> ComputerLastPostion = new ArrayList<Integer>(); //컴퓨터의 마지막 위치를 담는 어레이 리스트 생성
 	
 	ImageIcon X_ICON;
 	ImageIcon O_ICON;
@@ -55,6 +55,7 @@ public class TicTacToeWithComputer extends JFrame{
 		functionPanel.add(Undo);
 		functionPanel.add(Exit);
 		
+		
 		ResultLabel = new JLabel("Player의 차례"); //결과 라벨의 누구의 턴인지 알려준다.
 		JPanel ResultPanel = new JPanel();
 		ResultPanel.add(ResultLabel);
@@ -80,40 +81,42 @@ public class TicTacToeWithComputer extends JFrame{
 					
 					if(Board[BoardX][BoardY] == "" && WinCheck().equals("")) { //착수 위치가 비어있고 게임이 안끝난경우
 					
-						TempButton.setBackground(Color.yellow); //마지막 착수 위치 표기
-						TempButton.setIcon(X_ICON);
+						TempButton.setBackground(Color.yellow); //마지막 착수 위치 버튼에서 표기 > 이미지 크기가 버튼 보다 작아서 테두리가 노란색으로 보이는 효과가 됨
+						TempButton.setIcon(X_ICON); //기본 아이콘 설정
 						
-						Board[BoardX][BoardY] = "X";
+						Board[BoardX][BoardY] = "X"; //해당 X 좌표 y 좌표에 X 로 칠한다.
 						
 			
 				
-						if(WinCheck().equals("O")|| WinCheck().equals("X")) {
+						if(WinCheck().equals("O")|| WinCheck().equals("X")) { //X 좌표 Y 좌표에 칠한 후 승리가 판별나면
 							ResultLabel.setText(WinCheck().equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
 						}else if(WinCheck().equals("DRAW")) {
 							ResultLabel.setText("무승부!");
 						}
-						else {
+						else { //경기 결과가 안끝난 경우
 							
 							
-							for(int i =0; i< 6; i++) {
+							for(int i =0; i< 9; i++) {
 							
-									if (Board[i/3][i%3].equals("")) {
+									if (Board[i/3][i%3].equals("")) { //착수 위치가 비어있는 경우
 										Board[i/3][i%3] = "O";
 										JButton ComputerButton = WellButtons.get(i);
-										ComputerButton.setBackground(Color.green); //마지막 컴퓨터 착수 위치 표기
-										ComputerButton.setIcon(O_ICON);
+										ComputerButton.setBackground(Color.green); //마지막 컴퓨터 착수 위치 표기 > 이미지 크기가 버튼보다 작아서 테두리가 초록색으로 보이는 효과가 됨
+										ComputerButton.setIcon(O_ICON); //버튼
 										if(WinCheck().equals("O")|| WinCheck().equals("X")) {
 											ResultLabel.setText(WinCheck().equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
 										}else if(WinCheck().equals("DRAW")) {
 											ResultLabel.setText("무승부!");
 										}
-										try {
-											JButton b = WellButtons.get(ComputerLastPostion.get(ComputerLastPostion.size()-1));
+										
+										try { //컴퓨터의 마지막 착수 위치만 초록색으로 표기 해야 하므로 착수하기 전 버튼의 배경을 바꿔야함
+											JButton b = WellButtons.get(ComputerLastPostion.get(ComputerLastPostion.size()-1)); //컴퓨터가 착수한게 맨 처음이면 get(ComputerLastPostion.size()-1) 이 오류가 난다
+											//그러므로 try catch 문 사용
 											b.setBackground(null); //배경 초기화 
 										}catch(Exception error) {
-											
+											//ArrayListIndexException 이 발생한 경우 아무작업도 하지 않는다.
 										}finally {
-											ComputerLastPostion.add(i);
+											ComputerLastPostion.add(i); //오류가 나던 안나던 ComputerLastPostion 엔 컴퓨터가 착수한 위치를 설정해야 한다.
 										}
 										
 										
@@ -127,8 +130,9 @@ public class TicTacToeWithComputer extends JFrame{
 						
 						
 						//마지막 착수를 하면, 착수하기 전 버튼의 배경은 노란색이므로 null 로 만들어줘야한다.
-						try { //맨 처음으로 착수한 경우면 ArrayLists Index Exception 이 생길수 있다 
-							JButton b = WellButtons.get(UserLastPostion.get(UserLastPostion.size()-1));
+						try { 
+							JButton b = WellButtons.get(UserLastPostion.get(UserLastPostion.size()-1));//맨 처음으로 착수한 경우면 ArrayListsIndexException 이 생길수 있다 
+							//그러므로 try catch 문 사용
 							b.setBackground(null); //배경 초기화 
 							
 						}
@@ -136,7 +140,7 @@ public class TicTacToeWithComputer extends JFrame{
 							//오류가 발생하면 아무작업 하지 않음 
 						}
 						finally {
-							UserLastPostion.add(k);
+							UserLastPostion.add(k); //finally 구문으로 오루가 나던 안나던 UserlastPostion 에 마지막 착수 위치를 업데이트 해야됨.
 						}
 						
 						
@@ -152,13 +156,13 @@ public class TicTacToeWithComputer extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ResultLabel.setText("Player의 차례");
-				UserLastPostion.clear(); //마지막 착수 위치 싹 초기화
-				ComputerLastPostion.clear();
+				ResultLabel.setText("Player의 차례"); //라벨이 변경되어있을수 있으므로 초기화
+				UserLastPostion.clear(); //유저의 마지막 착수 위치 초기화
+				ComputerLastPostion.clear(); //컴퓨터의 마지막 착수 위치 초기화
 				// TODO Auto-generated method stub
-				for (JButton b: WellButtons) { //for each 문을 사용하여 버튼의 글자 초기화
-					b.setBackground(null);
-					b.setIcon(null);
+				for (JButton b: WellButtons) { //for each 문을 사용하여 버튼의 글자 초기화해야됨
+					b.setBackground(null); //버튼의 배경색 초기화
+					b.setIcon(null); //아이콘도 초기화
 					
 					
 					for (int i =0; i < 3; i++) {    //게임판 초기화
@@ -173,7 +177,7 @@ public class TicTacToeWithComputer extends JFrame{
 			
 		});
 		
-		Undo.addActionListener(new ActionListener() {
+		Undo.addActionListener(new ActionListener() { //무르기 버튼을 누르면 마지막 착수 부분을 지워야 한다.
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -181,17 +185,16 @@ public class TicTacToeWithComputer extends JFrame{
 				
 				
 				
-				try {
+				try {//사용자가 착수를 아예 안한 상태면 UserLastPostion.get(UserLastPostion.size()-1) 이 오류가 나므로 try catch 사용
 					
 					if (WinCheck().equals("")) { //게임이 끝난상태가 아니라면
-						int UserLast = UserLastPostion.get(UserLastPostion.size()-1);
+						int UserLast = UserLastPostion.get(UserLastPostion.size()-1); //유저가 마지막 착수 한 부분을 가져온다.
 						UserLastPostion.remove(UserLastPostion.size()-1); //마지막 인덱스 삭제 , 마지막 착수 위치 저장된값 지우기
-						
-						System.out.println(UserLast);//유저가 마지막 착수한 부분을 출력
+
 						
 						JButton UserButton = WellButtons.get(UserLast); //마지막 착수 위치 버튼을 가져오고
 						UserButton.setIcon(null); //버튼 글자 초기화
-						UserButton.setBackground(null);
+						UserButton.setBackground(null); //버튼 배경 색상 초기화
 						int UserX = UserLast/3; //착수 위치를 가지고 X Y 위치를 설정한다
 						int UserY = UserLast%3;
 						Board[UserX][UserY] = ""; //해당 착수위치의 보드를 "" 로 만든다. > 해당 부분 지우기
@@ -199,27 +202,25 @@ public class TicTacToeWithComputer extends JFrame{
 						
 						
 						
-						
-						
-						int ComputerLast = ComputerLastPostion.get(ComputerLastPostion.size()-1);
+	
+						int ComputerLast = ComputerLastPostion.get(ComputerLastPostion.size()-1); //컴퓨터가 마지막 착수한 부분을 가져온다.
 						ComputerLastPostion.remove(ComputerLastPostion.size()-1); //마지막 인덱스 삭제 , 마지막 착수 위치 저장된값 지우기
 						
-						System.out.println("컴퓨터 마지막 " + ComputerLast);
 						
 						JButton ComputerButton = WellButtons.get(ComputerLast); //마지막 착수 위치 버튼을 가져오고
 						ComputerButton.setIcon(null); //버튼 글자 초기화
-						ComputerButton.setBackground(null);
+						ComputerButton.setBackground(null);//버튼 색상 초기화
 						int ComputerX = ComputerLast/3; //착수 위치를 가지고 X Y 위치를 설정한다
 						int ComputerY = ComputerLast%3;
-						Board[ComputerX][ComputerY] = ""; //해당 착수위치의 보드를 "" 로 만든다. > 해당 부분 지우기
+						Board[ComputerX][ComputerY] = ""; //컴퓨터가 착수한 착수위치의 보드를 "" 로 만든다. > 해당 부분 지우기
 						
 						
-						int LastBeforePostion = UserLastPostion.get(UserLastPostion.size()-1); //마지막 전에 버튼을 가져와서
+						int LastBeforePostion = UserLastPostion.get(UserLastPostion.size()-1); //마지막 전에 버튼을 가져온다 즉 2 번 3 번 버튼을 누른상태면 2번 버튼을 가져온다.
 						UserButton = WellButtons.get(LastBeforePostion);
 						UserButton.setBackground(Color.yellow); //마지막 전 버튼이 마지막에 눌렸으므로 테두리 표기
 				
 						
-						int ComputerLastBeforePostion = ComputerLastPostion.get(ComputerLastPostion.size()-1); //마지막 전에 버튼을 가져와서
+						int ComputerLastBeforePostion = ComputerLastPostion.get(ComputerLastPostion.size()-1); //마지막 전에 버튼을 가져온다 즉 2 번 3 번 버튼을 누른상태면 2번 버튼을 가져온다.
 						ComputerButton = WellButtons.get(ComputerLastBeforePostion);
 						ComputerButton.setBackground(Color.green); //마지막 전 버튼이 마지막에 눌렸으므로 테두리 표기
 						
@@ -230,7 +231,8 @@ public class TicTacToeWithComputer extends JFrame{
 					
 				}
 				catch(Exception error){
-					//error.printStackTrace();
+					//사용자가 착수를 아예 안한 상태면 UserLastPostion.get(UserLastPostion.size()-1) 이 ArrayListIndexException 이 발생한다.
+					//오류가 난 경우 아무작업 수행 안함
 				}
 				
 				
@@ -238,19 +240,19 @@ public class TicTacToeWithComputer extends JFrame{
 			
 		});
 		
-		Exit.addActionListener(new ActionListener() {
+		Exit.addActionListener(new ActionListener() { //종료 버튼을 누르면
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { 
 				// TODO Auto-generated method stub
-				System.exit(0);
+				System.exit(0);//프로그램 종료
 			}
 			
 		});
 		
 		
 		
-		this.add(functionPanel,BorderLayout.NORTH);
+		this.add(functionPanel,BorderLayout.NORTH); //패널을 JFrame 에 적절히 푸가
 		this.add(GamePanel, BorderLayout.CENTER);
 		
 		
@@ -259,35 +261,35 @@ public class TicTacToeWithComputer extends JFrame{
 		this.setVisible(true); 
 	}
 	
-	private String WinCheck() {
+	private String WinCheck() { //승리를 체크하는 알고리즘
 		
 		
 		 for(int i=0; i<3; i++){ 
-			 if( Board[0][i].equals(Board[1][i]) && Board[1][i].equals(Board[2][i])) {
+			 if( Board[0][i].equals(Board[1][i]) && Board[1][i].equals(Board[2][i])) { //가로줄 검사
 				 return Board[0][i];
 			 }
 			 
 		 } 
 		 for(int i=0; i<3; i++){
-			 if( Board[i][0].equals(Board[i][1]) && Board[i][1].equals(Board[i][2])) {
+			 if( Board[i][0].equals(Board[i][1]) && Board[i][1].equals(Board[i][2])) { //세로줄 검사
 				 return Board[i][0];
 			 }
 	
 		 } 
 
 			 
-		 if( Board[0][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][2])) {
+		 if( Board[0][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][2])) { // 대각선 검사 ( ↘ 대각선 검사)
 			return Board[0][0];
 				
 		}
-		 if( Board[2][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][0])) {
+		 if( Board[2][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][0])) { //대각선 검사 (↗ 대각선 검사)
 				return Board[2][0];
 					
 			}
-		for (int i=0; i<3;i++) {
+		for (int i=0; i<3;i++) { 
 			for (int j=0; j<3; j++) {
 				if (Board[i][j].equals("")) {
-					return ""; //보드가 꽉차지 않은 경우
+					return ""; //보드가 꽉차지 않은 경우 위의 return 이 수행 안되므로 승자가 없음을 반환
 				}
 			}
 		}
