@@ -94,39 +94,63 @@ public class TicTacToeWithComputer extends JFrame{
 							ResultLabel.setText("무승부!");
 						}
 						else { //경기 결과가 안끝난 경우
+							int i = findBestPostion();
+							System.out.println("베스트 포지션 98 행 " + i);;
+							Board[i/3][i%3] = "O";
+							JButton ComputerButton = WellButtons.get(i);
+							ComputerButton.setBackground(Color.green); //마지막 컴퓨터 착수 위치 표기 > 이미지 크기가 버튼보다 작아서 테두리가 초록색으로 보이는 효과가 됨
+							ComputerButton.setIcon(O_ICON); //버튼
+							if(WinCheck(Board).equals("O")|| WinCheck(Board).equals("X")) {
+								ResultLabel.setText(WinCheck(Board).equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
+							}
+							else if(WinCheck(Board).equals("DRAW")) {
+								ResultLabel.setText("무승부!");
+							}
+								
+							try { //컴퓨터의 마지막 착수 위치만 초록색으로 표기 해야 하므로 착수하기 전 버튼의 배경을 바꿔야함
+								JButton b = WellButtons.get(ComputerLastPostion.get(ComputerLastPostion.size()-1)); //컴퓨터가 착수한게 맨 처음이면 get(ComputerLastPostion.size()-1) 이 오류가 난다
+								//그러므로 try catch 문 사용
+								b.setBackground(null); //배경 초기화 
+							}catch(Exception error) {
+								//ArrayListIndexException 이 발생한 경우 아무작업도 하지 않는다.
+							}finally {
+								ComputerLastPostion.add(i); //오류가 나던 안나던 ComputerLastPostion 엔 컴퓨터가 착수한 위치를 설정해야 한다.
+							}
 							
-							findBestPostion();
 							
-							
+							/*
 							for(int i =0; i< 9; i++) {
 							
-									if (Board[i/3][i%3].equals("")) { //착수 위치가 비어있는 경우, 가장 최근의 비어있는 부분을 착수한다.
-										Board[i/3][i%3] = "O";
-										JButton ComputerButton = WellButtons.get(i);
-										ComputerButton.setBackground(Color.green); //마지막 컴퓨터 착수 위치 표기 > 이미지 크기가 버튼보다 작아서 테두리가 초록색으로 보이는 효과가 됨
-										ComputerButton.setIcon(O_ICON); //버튼
-										if(WinCheck(Board).equals("O")|| WinCheck(Board).equals("X")) {
-											ResultLabel.setText(WinCheck(Board).equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
-										}else if(WinCheck(Board).equals("DRAW")) {
-											ResultLabel.setText("무승부!");
-										}
-										
-										try { //컴퓨터의 마지막 착수 위치만 초록색으로 표기 해야 하므로 착수하기 전 버튼의 배경을 바꿔야함
-											JButton b = WellButtons.get(ComputerLastPostion.get(ComputerLastPostion.size()-1)); //컴퓨터가 착수한게 맨 처음이면 get(ComputerLastPostion.size()-1) 이 오류가 난다
-											//그러므로 try catch 문 사용
-											b.setBackground(null); //배경 초기화 
-										}catch(Exception error) {
-											//ArrayListIndexException 이 발생한 경우 아무작업도 하지 않는다.
-										}finally {
-											ComputerLastPostion.add(i); //오류가 나던 안나던 ComputerLastPostion 엔 컴퓨터가 착수한 위치를 설정해야 한다.
-										}
-										
-										
-										break;
+								if (Board[i/3][i%3].equals("")) { //착수 위치가 비어있는 경우, 가장 최근의 비어있는 부분을 착수한다.
+									Board[i/3][i%3] = "O";
+									JButton ComputerButton = WellButtons.get(i);
+									ComputerButton.setBackground(Color.green); //마지막 컴퓨터 착수 위치 표기 > 이미지 크기가 버튼보다 작아서 테두리가 초록색으로 보이는 효과가 됨
+									ComputerButton.setIcon(O_ICON); //버튼
+									if(WinCheck(Board).equals("O")|| WinCheck(Board).equals("X")) {
+										ResultLabel.setText(WinCheck(Board).equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
 									}
+									else if(WinCheck(Board).equals("DRAW")) {
+										ResultLabel.setText("무승부!");
+									}
+										
+									try { //컴퓨터의 마지막 착수 위치만 초록색으로 표기 해야 하므로 착수하기 전 버튼의 배경을 바꿔야함
+										JButton b = WellButtons.get(ComputerLastPostion.get(ComputerLastPostion.size()-1)); //컴퓨터가 착수한게 맨 처음이면 get(ComputerLastPostion.size()-1) 이 오류가 난다
+										//그러므로 try catch 문 사용
+										b.setBackground(null); //배경 초기화 
+									}catch(Exception error) {
+										//ArrayListIndexException 이 발생한 경우 아무작업도 하지 않는다.
+									}finally {
+										ComputerLastPostion.add(i); //오류가 나던 안나던 ComputerLastPostion 엔 컴퓨터가 착수한 위치를 설정해야 한다.
+									}
+										
+										
+									break;
 								}
+							}
+								*/
 								
 						}
+						print_board();
 							
 							
 						
@@ -283,11 +307,11 @@ public class TicTacToeWithComputer extends JFrame{
 		 if( Board[0][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][2])) { // 대각선 검사 ( ↘ 대각선 검사)
 			return Board[0][0];
 				
-		}
-		 if( Board[2][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][0])) { //대각선 검사 (↗ 대각선 검사)
-				return Board[2][0];
+		 }
+		 if( Board[2][0].equals(Board[1][1]) && Board[1][1].equals(Board[0][2])) { //대각선 검사 (↗ 대각선 검사)
+			return Board[2][0];
 					
-			}
+		}
 		for (int i=0; i<3;i++) { 
 			for (int j=0; j<3; j++) {
 				if (Board[i][j].equals("")) {
@@ -300,10 +324,18 @@ public class TicTacToeWithComputer extends JFrame{
 		
 	}
 	
-	private int findBestPostion() { //베스트 케이스를 찾는 경우
-		int BestPostion = -1;
+	private int findBestPostion() { //컴퓨터가 베스트 케이스를 찾는 경우
+		/*
+		 * 베스트 케이스의 가중치는 다음과 같다
+		 * 1. 컴퓨터가 이기는 경우
+		 * 2. 사용자가 이기는 경우
+		 * 3. 가운데를 막는 경우
+		 * 4. 그 외의 랜덤의 착수 하는 경우
+		 */
+	
+		
 		String[][] TempBoard = new String[3][3];
-		//여기서 작업
+		
 		
 		for (int k =0; k<9; k++) {
 			for (int i = 0; i < 3; i++) { //보드 초기화
@@ -311,12 +343,14 @@ public class TicTacToeWithComputer extends JFrame{
 					TempBoard[i][j] = Board[i][j];
 				}
 			}
+			
+	
 			//검사 우선은 컴퓨터가 착수한 부분이 먼저 O 가 된 경우
 			if(TempBoard[k/3][k%3].equals("")) {
 				TempBoard[k/3][k%3] = "O";
 				if (!WinCheck(TempBoard).equals("")) {
 					System.out.println("베스트 포지션 " +WinCheck(TempBoard)+k);
-					return k; //컴퓨터가 이긴 경우
+					return k; //컴퓨터가 이긴 경우엔 그 자리를 컴퓨터가 착수
 				}
 				
 			}
@@ -335,7 +369,9 @@ public class TicTacToeWithComputer extends JFrame{
 				}
 				
 			}
-			
+			if(TempBoard[1][1].equals("")) {
+				return 4; //컴퓨터는 가운데가 비어있으면 무조건 착수를 진행
+			}
 			
 			
 		}
@@ -356,6 +392,15 @@ public class TicTacToeWithComputer extends JFrame{
 		}while(true);
 	}
 	
+	private void print_board() {
+		for(int i = 0; i <3 ; i++) {
+			for (int j = 0; j <3; j++) {
+				System.out.print(Board[i][j] + " ");
+				
+			}
+			System.out.println();
+		}
+	}
 	
 
 	
