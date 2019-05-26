@@ -49,11 +49,11 @@ public class TicTacToe extends JFrame{
 		
 
 		
-		functionPanel.add(NewGame);
+		functionPanel.add(NewGame); //기능 패널에 버튼 3개 추가
 		functionPanel.add(Undo);
 		functionPanel.add(Exit);
 		
-		JLabel ResultLabel = new JLabel("Player 1 의 차례");
+		JLabel ResultLabel = new JLabel("Player 1 의 차례"); //결과 라벨의 누구의 턴인지 알려준다.
 		JPanel ResultPanel = new JPanel();
 		ResultPanel.add(ResultLabel);
 		
@@ -91,14 +91,14 @@ public class TicTacToe extends JFrame{
 							ResultLabel.setText("무승부!");
 						}
 						
-						//마지막 착수 위치 표기 해야됨.
-						try {
+						//마지막 착수를 하면, 착수하기 전 버튼의 배경은 노란색이므로 null 로 만들어줘야한다.
+						try { //맨 처음으로 착수한 경우면 ArrayLists Index Exception 이 생길수 있다 
 							JButton b = WellButtons.get(UserLastPostion.get(UserLastPostion.size()-1));
-							b.setBackground(null);
+							b.setBackground(null); //배경 초기화 
 							
 						}
 						catch(Exception Error) {
-							
+							//오류가 발생하면 아무작업 하지 않음 
 						}
 						finally {
 							UserLastPostion.add(k);
@@ -223,7 +223,7 @@ public class TicTacToe extends JFrame{
 			return Board[0][0];
 				
 		}
-		 if( Board[2][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][0])) {
+		 if( Board[2][0].equals(Board[1][1]) && Board[1][1].equals(Board[0][2])) {
 				return Board[2][0];
 					
 			}
@@ -237,6 +237,23 @@ public class TicTacToe extends JFrame{
 		return "DRAW"; //보드가 꽉찬 경우 무승부
 		
 		
+	}
+	
+	
+	private void ComputerClick() {
+		for (int i=0; i <3; i++) {
+			for (int j=0; j<3; j++) {
+				if (Board[i][j].equals("")) { 
+					
+					int Postion = i+j;
+					JButton ComputerButton = WellButtons.get(Postion);
+					ComputerButton.doClick();
+					Board[i][j] = "O";
+					break;
+					
+				}
+			}
+		}
 	}
 
 	
