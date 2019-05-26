@@ -20,7 +20,7 @@ public class TicTacToeWithComputer extends JFrame {
 
 	ArrayList<Integer> UserLastPostion = new ArrayList<Integer>(); // 사용자의 마지막 위치를 담는 어레이 리스트 생성
 	ArrayList<Integer> ComputerLastPostion = new ArrayList<Integer>(); // 컴퓨터의 마지막 위치를 담는 어레이 리스트 생성
-
+	String[][] TempBoard = new String[3][3];
 	ImageIcon X_ICON;
 	ImageIcon O_ICON;
 	JLabel ResultLabel;
@@ -111,7 +111,7 @@ public class TicTacToeWithComputer extends JFrame {
 
 	
 						}
-						print_board(); //디버그용 보드 출력
+
 
 						// 마지막 착수를 하면, 착수하기 전 버튼의 배경은 노란색이므로 null 로 만들어줘야한다.
 						try {
@@ -164,7 +164,7 @@ public class TicTacToeWithComputer extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
+				ResultLabel.setText("Player 의 차례");
 				try {// 사용자가 착수를 아예 안한 상태면 UserLastPostion.get(UserLastPostion.size()-1) 이 오류가 나므로
 					// try catch 사용
 
@@ -226,32 +226,43 @@ public class TicTacToeWithComputer extends JFrame {
 		this.setVisible(true);
 	}
 
-	private String WinCheck(String[][] Board) { // 승리를 체크하는 알고리즘
-
+	private String WinCheck(String[][] tBoard) { // 승리를 체크하는 알고리즘
+	
+		
 		for (int i = 0; i < 3; i++) {
-			if (Board[0][i].equals(Board[1][i]) && Board[1][i].equals(Board[2][i])) { // 가로줄 검사
-				return Board[0][i];
+		
+			if ( (tBoard[0][i].equals(tBoard[1][i]) && tBoard[1][i].equals(tBoard[2][i])) &&   (tBoard[0][i].equals("X") || tBoard[0][i].equals("O"))) { // 세로줄 검사
+
+				return tBoard[0][i];
 			}
 
 		}
+
 		for (int i = 0; i < 3; i++) {
-			if (Board[i][0].equals(Board[i][1]) && Board[i][1].equals(Board[i][2])) { // 세로줄 검사
-				return Board[i][0];
+			
+			
+
+			if (  (tBoard[i][0].equals(tBoard[i][1]) && tBoard[i][1].equals(tBoard[i][2]))&& (tBoard[i][0].equals("X") || tBoard[i][0].equals("O"))) { // 가로줄 검사
+		
+				return tBoard[i][0];
 			}
 
 		}
 
-		if (Board[0][0].equals(Board[1][1]) && Board[1][1].equals(Board[2][2])) { // 대각선 검사 ( ↘ 대각선 검사)
-			return Board[0][0];
+		if (tBoard[0][0].equals(tBoard[1][1]) && tBoard[1][1].equals(tBoard[2][2])) { // 대각선 검사 ( ↘ 대각선 검사)
+	
+			return tBoard[0][0];
 
 		}
-		if (Board[2][0].equals(Board[1][1]) && Board[1][1].equals(Board[0][2])) { // 대각선 검사 (↗ 대각선 검사)
-			return Board[2][0];
+		if (tBoard[2][0].equals(tBoard[1][1]) && tBoard[1][1].equals(tBoard[0][2])) { // 대각선 검사 (↗ 대각선 검사)
+
+			return tBoard[2][0];
 
 		}
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				if (Board[i][j].equals("")) {
+				if (tBoard[i][j].equals("")) {
+					//System.out.print("리턴 5");
 					return ""; // 보드가 꽉차지 않은 경우 위의 return 이 수행 안되므로 승자가 없음을 반환
 				}
 			}
@@ -269,42 +280,59 @@ public class TicTacToeWithComputer extends JFrame {
 		 * 4. 그 외의 랜덤이 비어있는 경우 착수
 		 */
 
-		String[][] TempBoard = new String[3][3];
+		
 
 		for (int k = 0; k < 9; k++) {
+			
+		
 			for (int i = 0; i < 3; i++) { // 보드 초기화
 				for (int j = 0; j < 3; j++) {
-					TempBoard[i][j] = Board[i][j];
+					this.TempBoard[i][j] = this.Board[i][j];
+				}
+			}
+			if (this.TempBoard[1][1].equals("")) {
+				
+
+				return 4; // 컴퓨터는 가운데가 비어있으면 무조건 착수를 진행
+			}
+			
+			for (int i = 0; i < 3; i++) { // 보드 초기화
+				for (int j = 0; j < 3; j++) {
+					this.TempBoard[i][j] = this.Board[i][j];
 				}
 			}
 
-			// 검사 우선은 컴퓨터가 착수한 부분이 먼저 O 가 된 경우
-			if (TempBoard[k / 3][k % 3].equals("")) {
-				TempBoard[k / 3][k % 3] = "O";
-				if (!WinCheck(TempBoard).equals("")) {
+
+			if (this.TempBoard[k / 3][k % 3].equals("")) {
+				this.TempBoard[k / 3][k % 3] = "O";
+
+				if (!(WinCheck(this.TempBoard).equals(""))) {
+
 					return k; // 컴퓨터가 이긴 경우엔 그 자리를 컴퓨터가 착수
 				}
 
 			}
-
+			
 			for (int i = 0; i < 3; i++) { // 보드 초기화
 				for (int j = 0; j < 3; j++) {
-					TempBoard[i][j] = Board[i][j];
+					this.TempBoard[i][j] = this.Board[i][j];
 				}
 			}
-			// 컴퓨터가 이길수 없고 사용자가 이길수 있는 경우 검사
-			if (TempBoard[k / 3][k % 3].equals("")) {
-				TempBoard[k / 3][k % 3] = "X";
-				if (!WinCheck(TempBoard).equals("")) {
+
+			if (this.TempBoard[k / 3][k % 3].equals("")) {
+				this.TempBoard[k / 3][k % 3] = "X";
+
+				if (!(WinCheck(this.TempBoard).equals(""))) {
+
 					return k; // 사용자가 이긴 경우
 				}
 
 			}
-			if (TempBoard[1][1].equals("")) {
-				return 4; // 컴퓨터는 가운데가 비어있으면 무조건 착수를 진행
-			}
+
 
 		}
+		
+		
 		for (int i = 0; i < 3; i++) { // 보드 초기화
 			for (int j = 0; j < 3; j++) {
 				TempBoard[i][j] = Board[i][j];
@@ -317,21 +345,15 @@ public class TicTacToeWithComputer extends JFrame {
 			first = (int) (Math.random() * 3);
 			second = (int) (Math.random() * 3);
 			if (TempBoard[first][second].equals("")) {
+
 				return first * 3 + second;
 			}
 		} while (true); //무조건 랜덤 포지션이 반환될수 있게 수정
 	}
+	
+	
 
-	private void print_board() {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				System.out.print(Board[i][j] + "\t|");
 
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}
 
 	public static void main(String[] args) {
 		new TicTacToeWithComputer();
