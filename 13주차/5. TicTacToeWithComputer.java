@@ -98,7 +98,7 @@ public class TicTacToeWithComputer extends JFrame{
 							
 							for(int i =0; i< 9; i++) {
 							
-									if (Board[i/3][i%3].equals("")) { //착수 위치가 비어있는 경우
+									if (Board[i/3][i%3].equals("")) { //착수 위치가 비어있는 경우, 가장 최근의 비어있는 부분을 착수한다.
 										Board[i/3][i%3] = "O";
 										JButton ComputerButton = WellButtons.get(i);
 										ComputerButton.setBackground(Color.green); //마지막 컴퓨터 착수 위치 표기 > 이미지 크기가 버튼보다 작아서 테두리가 초록색으로 보이는 효과가 됨
@@ -295,6 +295,10 @@ public class TicTacToeWithComputer extends JFrame{
 		}
 		return "DRAW"; //보드가 꽉찬 경우 무승부
 		
+		
+	}
+	
+	private void findBestPostion() { //베스트 케이스를 찾는 경우
 		
 	}
 	
