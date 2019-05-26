@@ -145,31 +145,28 @@ public class TicTacToe extends JFrame{
 				
 				try {
 					
-					if (WinCheck().equals("")) { //게임이 끝난상태가 아니라면
-						int LastPostion = UserLastPostion.get(UserLastPostion.size()-1);
-						UserLastPostion.remove(UserLastPostion.size()-1); //마지막 인덱스 삭제 , 마지막 착수 위치 저장된값 지우기
-						
-						System.out.println(LastPostion);//유저가 마지막 착수한 부분을 출력
-						
-						JButton TempButtons = WellButtons.get(LastPostion); //마지막 착수 위치 버튼을 가져오고
-						TempButtons.setIcon(null); //버튼 글자 초기화
-						TempButtons.setBackground(null);
-						int BoardX = LastPostion/3; //착수 위치를 가지고 X Y 위치를 설정한다
-						int BoardY = LastPostion%3;
-						Board[BoardX][BoardY] = ""; //해당 착수위치의 보드를 "" 로 만든다. > 해당 부분 지우기
-						turn = turn.equals("X") ? "O" : "X";
-						ResultLabel.setText(turn.equals("X") ? "Player 1 의 차례" : "Player 2 의 차례");
-						
-						
-						
-						int LastBeforePostion = UserLastPostion.get(UserLastPostion.size()-1); //마지막 전에 버튼을 가져와서
-						JButton TempButton = WellButtons.get(LastBeforePostion);
-						TempButton.setBackground(Color.yellow); //마지막 전 버튼이 마지막에 눌렸으므로 테두리 표기
+					int LastPostion = UserLastPostion.get(UserLastPostion.size() - 1);
+					UserLastPostion.remove(UserLastPostion.size() - 1); // 마지막 인덱스 삭제 , 마지막 착수 위치 저장된값 지우기
+
+					System.out.println(LastPostion);// 유저가 마지막 착수한 부분을 출력
+
+					JButton TempButtons = WellButtons.get(LastPostion); // 마지막 착수 위치 버튼을 가져오고
+					TempButtons.setIcon(null); // 버튼 글자 초기화
+					TempButtons.setBackground(null);
+					int BoardX = LastPostion / 3; // 착수 위치를 가지고 X Y 위치를 설정한다
+					int BoardY = LastPostion % 3;
+					Board[BoardX][BoardY] = ""; // 해당 착수위치의 보드를 "" 로 만든다. > 해당 부분 지우기
+					turn = turn.equals("X") ? "O" : "X";
+					ResultLabel.setText(turn.equals("X") ? "Player 1 의 차례" : "Player 2 의 차례");
+
+					int LastBeforePostion = UserLastPostion.get(UserLastPostion.size() - 1); // 마지막 전에 버튼을 가져와서
+					JButton TempButton = WellButtons.get(LastBeforePostion);
+					TempButton.setBackground(Color.yellow); // 마지막 전 버튼이 마지막에 눌렸으므로 테두리 표기
 						
 						
 						
 						
-					}
+					
 					
 				}
 				catch(Exception error){
