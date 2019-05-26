@@ -163,9 +163,6 @@ public class TicTacToe extends JFrame{
 					JButton TempButton = WellButtons.get(LastBeforePostion);
 					TempButton.setBackground(Color.yellow); // 마지막 전 버튼이 마지막에 눌렸으므로 테두리 표기
 						
-						
-						
-						
 					
 					
 				}
@@ -199,7 +196,7 @@ public class TicTacToe extends JFrame{
 		this.setVisible(true); 
 	}
 	
-	private String WinCheck() {
+	private String WinCheck() { //승리 검사
 		
 		
 		 for(int i=0; i<3; i++){ 
@@ -233,13 +230,9 @@ public class TicTacToe extends JFrame{
 		}
 		return "DRAW"; //보드가 꽉찬 경우 무승부
 		
-		
 	}
 	
-	
 
-
-	
 	
 	public static void main(String[] args) {
 		new TicTacToe();
