@@ -20,7 +20,7 @@ public class TicTacToe extends JFrame{
 	String turn = "X";
 	
 	ArrayList<Integer> UserLastPostion = new ArrayList<Integer>(); //사용자의 마지막 위치를 담는 버튼 생성
-	ArrayList<Integer> ComputerLastPostion = new ArrayList<Integer>(); //컴퓨터의 마지막 위치를 담는 버튼 생성
+
 
 	String[][] Board = { //착수 위치를 저장하기 위한 판, 게임 승리 알고리즘 검사할때 활용
 			{"","",""},
@@ -240,21 +240,7 @@ public class TicTacToe extends JFrame{
 	}
 	
 	
-	private void ComputerClick() {
-		for (int i=0; i <3; i++) {
-			for (int j=0; j<3; j++) {
-				if (Board[i][j].equals("")) { 
-					
-					int Postion = i+j;
-					JButton ComputerButton = WellButtons.get(Postion);
-					ComputerButton.doClick();
-					Board[i][j] = "O";
-					break;
-					
-				}
-			}
-		}
-	}
+
 
 	
 	
