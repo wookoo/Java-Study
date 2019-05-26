@@ -79,7 +79,7 @@ public class TicTacToeWithComputer extends JFrame{
 					int BoardX = k/3;
 					int BoardY = k%3;
 					
-					if(Board[BoardX][BoardY] == "" && WinCheck().equals("")) { //착수 위치가 비어있고 게임이 안끝난경우
+					if(Board[BoardX][BoardY] == "" && WinCheck(Board).equals("")) { //착수 위치가 비어있고 게임이 안끝난경우
 					
 						TempButton.setBackground(Color.yellow); //마지막 착수 위치 버튼에서 표기 > 이미지 크기가 버튼 보다 작아서 테두리가 노란색으로 보이는 효과가 됨
 						TempButton.setIcon(X_ICON); //기본 아이콘 설정
@@ -88,12 +88,14 @@ public class TicTacToeWithComputer extends JFrame{
 						
 			
 				
-						if(WinCheck().equals("O")|| WinCheck().equals("X")) { //X 좌표 Y 좌표에 칠한 후 승리가 판별나면
-							ResultLabel.setText(WinCheck().equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
-						}else if(WinCheck().equals("DRAW")) {
+						if(WinCheck(Board).equals("O")|| WinCheck(Board).equals("X")) { //X 좌표 Y 좌표에 칠한 후 승리가 판별나면
+							ResultLabel.setText(WinCheck(Board).equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
+						}else if(WinCheck(Board).equals("DRAW")) {
 							ResultLabel.setText("무승부!");
 						}
 						else { //경기 결과가 안끝난 경우
+							
+							findBestPostion();
 							
 							
 							for(int i =0; i< 9; i++) {
@@ -103,9 +105,9 @@ public class TicTacToeWithComputer extends JFrame{
 										JButton ComputerButton = WellButtons.get(i);
 										ComputerButton.setBackground(Color.green); //마지막 컴퓨터 착수 위치 표기 > 이미지 크기가 버튼보다 작아서 테두리가 초록색으로 보이는 효과가 됨
 										ComputerButton.setIcon(O_ICON); //버튼
-										if(WinCheck().equals("O")|| WinCheck().equals("X")) {
-											ResultLabel.setText(WinCheck().equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
-										}else if(WinCheck().equals("DRAW")) {
+										if(WinCheck(Board).equals("O")|| WinCheck(Board).equals("X")) {
+											ResultLabel.setText(WinCheck(Board).equals("X") ? "Player 의 승리!" : "Computer 의 승리!"); //승리 검사
+										}else if(WinCheck(Board).equals("DRAW")) {
 											ResultLabel.setText("무승부!");
 										}
 										
@@ -187,7 +189,7 @@ public class TicTacToeWithComputer extends JFrame{
 				
 				try {//사용자가 착수를 아예 안한 상태면 UserLastPostion.get(UserLastPostion.size()-1) 이 오류가 나므로 try catch 사용
 					
-					if (WinCheck().equals("")) { //게임이 끝난상태가 아니라면
+					if (WinCheck(Board).equals("")) { //게임이 끝난상태가 아니라면
 						int UserLast = UserLastPostion.get(UserLastPostion.size()-1); //유저가 마지막 착수 한 부분을 가져온다.
 						UserLastPostion.remove(UserLastPostion.size()-1); //마지막 인덱스 삭제 , 마지막 착수 위치 저장된값 지우기
 
@@ -261,7 +263,7 @@ public class TicTacToeWithComputer extends JFrame{
 		this.setVisible(true); 
 	}
 	
-	private String WinCheck() { //승리를 체크하는 알고리즘
+	private String WinCheck(String[][] Board) { //승리를 체크하는 알고리즘
 		
 		
 		 for(int i=0; i<3; i++){ 
@@ -298,8 +300,60 @@ public class TicTacToeWithComputer extends JFrame{
 		
 	}
 	
-	private void findBestPostion() { //베스트 케이스를 찾는 경우
+	private int findBestPostion() { //베스트 케이스를 찾는 경우
+		int BestPostion = -1;
+		String[][] TempBoard = new String[3][3];
+		//여기서 작업
 		
+		for (int k =0; k<9; k++) {
+			for (int i = 0; i < 3; i++) { //보드 초기화
+				for (int j = 0; j <  3; j++) {
+					TempBoard[i][j] = Board[i][j];
+				}
+			}
+			//검사 우선은 컴퓨터가 착수한 부분이 먼저 O 가 된 경우
+			if(TempBoard[k/3][k%3].equals("")) {
+				TempBoard[k/3][k%3] = "O";
+				if (!WinCheck(TempBoard).equals("")) {
+					System.out.println("베스트 포지션 " +WinCheck(TempBoard)+k);
+					return k; //컴퓨터가 이긴 경우
+				}
+				
+			}
+			
+			for (int i = 0; i < 3; i++) { //보드 초기화
+				for (int j = 0; j <  3; j++) {
+					TempBoard[i][j] = Board[i][j];
+				}
+			}
+			//컴퓨터가 이길수 없고 사용자가 이길수 있는 경우 검사 
+			if(TempBoard[k/3][k%3].equals("")) {
+				TempBoard[k/3][k%3] = "X";
+				if (!WinCheck(TempBoard).equals("")) {
+					System.out.println("베스트 포지션 " +WinCheck(TempBoard)+k);
+					return k; //사용자가 이긴 경우
+				}
+				
+			}
+			
+			
+			
+		}
+		for (int i = 0; i < 3; i++) { //보드 초기화
+			for (int j = 0; j <  3; j++) {
+				TempBoard[i][j] = Board[i][j];
+			}
+		}
+		//위에서 리턴이 수행이 안된 경우 랜덤 포지션 반환
+		do {
+			int first;
+			int second;
+			first = (int)(Math.random()*3);
+			second  = (int)(Math.random()*3);
+			if (TempBoard[first][second].equals("")) {
+				return first*3 +second;
+			}
+		}while(true);
 	}
 	
 	
